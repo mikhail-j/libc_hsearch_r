@@ -19,6 +19,10 @@
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <errno.h>
@@ -41,5 +45,8 @@ int hcreate_r (size_t nel, struct hsearch_data *htab);
 void hdestroy_r (struct hsearch_data *htab);
 int hsearch_r (ENTRY item, ACTION action, ENTRY **retval, struct hsearch_data *htab);
 
-
 #endif /* SEARCH_HCREATE_R_H */
+
+#ifdef __cplusplus
+}
+#endif

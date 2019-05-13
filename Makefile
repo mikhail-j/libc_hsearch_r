@@ -26,7 +26,7 @@ test:
 		echo "Test #1 (without dynamic library linkage): failed to compile!"; \
 		exit 1; \
 	fi;
-	@if [ "$(shell $(CC) $(CFLAGS) -o test/test_hsearch_r_shared -L./ -l hsearch_r ./test/test_hsearch_r.c && echo $$?)" = "0" ]; then \
+	@if [ "$(shell $(CC) $(CFLAGS) -o test/test_hsearch_r_shared ./test/test_hsearch_r.c -L./ -l hsearch_r && echo $$?)" = "0" ]; then \
 		echo "Test #2 (with dynamic library linkage): compiled successfully!"; \
 	else \
 		echo "Test #2 (with dynamic library linkage): failed to compile!"; \
