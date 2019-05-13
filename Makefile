@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0
 
 CC=gcc
-CFLAGS=-std=c99
+CFLAGS=-std=c99 -O2
 
 ifeq ($(OS),Windows_NT)
 	SHARED_LIB_EXT = .dll 
