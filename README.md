@@ -1,13 +1,14 @@
 # libc_hsearch_r
 
-Portable C library re-entrant hash table search functions.
-
 `libhsearch_r` is designed to be a portable implementation of the hash table GNU extensions of `search.h` (C standard library).
+
+libhsearch_r runs on operating systems that do not provide `hcreate_r()`, `hsearch_r()`, and `hdestroy_r()` GNU extensions (MacOS, Microsoft Windows, etc). These GNU extensions are a thread-safe re-entrant implementation of hash tables according the [Linux's manual page for HSEARCH(3)](http://man7.org/linux/man-pages/man3/hcreate.3.html).
 
 Functions provided by libhsearch_r
 ----------------------------------
 
-- `hcreate_r(size_t nel, struct hsearch_data *htab)` - Initializes hash table handle `htab` with `nel` elements. `htab->table` must be initialized to NULL.
+- `hcreate_r(size_t nel, struct hsearch_data *htab)` - Initializes hash table handle `htab` with `nel` elements.
+`htab->table` must be initialized to NULL.
 - `hdestroy_r(struct hsearch_data *htab)` - Frees all hash table resources allocated by `hcreate_r()`.
 - `hsearch_r(ENTRY item, ACTION action, ENTRY **retval, struct hsearch_data *htab)` - Returns hash table `ENTRY` through `retval`. The `retval` argument is ignored if the `action` parameter is `FIND`.
 
