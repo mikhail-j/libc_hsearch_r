@@ -1,7 +1,5 @@
 /* Test re-entrant hash table search functions without dynamic library linkage.
  *
- * Copyright (C) 1993-2019 Free Software Foundation, Inc.
- * Contributed by Ulrich Drepper <drepper@gnu.ai.mit.edu>, 1993.
  * Copyright (C) 2019 Qijia (Michael) Jin
  *
  * This program is free software; you can redistribute it and/or
