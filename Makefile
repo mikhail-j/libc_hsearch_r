@@ -2,6 +2,7 @@
 
 CC=gcc
 CFLAGS=-std=c99 -O2
+OS_SHARED_LIBRARY_FLAGS=
 
 ifeq ($(OS),Windows_NT)
 	SHARED_LIB_EXT = .dll 
@@ -9,6 +10,7 @@ else
 	OS_NAME := $(shell uname -s)
 	ifeq ($(OS_NAME),Darwin)
 		SHARED_LIB_EXT = .dylib
+		OS_SHARED_LIBRARY_FLAGS = -dynamiclib
 	else
 		SHARED_LIB_EXT = .so
 	endif
@@ -52,7 +54,7 @@ test:
 #	[ "$$?" != "0"] && $(error "Testing libhsearch_r without dynamic library linkage failed!")
 
 lib: 
-	$(CC) $(CFLAGS) -fPIC -shared -o libhsearch_r$(SHARED_LIB_EXT) ./search_hsearch_r.c
+	$(CC) $(OS_SHARED_LIBRARY_FLAGS) $(CFLAGS) -fPIC -shared -o libhsearch_r$(SHARED_LIB_EXT) ./search_hsearch_r.c
 
 clean:
 	rm -f ./test/test_hsearch_r
