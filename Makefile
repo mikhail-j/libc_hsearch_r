@@ -13,7 +13,7 @@ else
 		SHARED_LIB_EXT = .dylib
 		OS_SHARED_LIBRARY_FLAGS = -dynamiclib
 	else
-		LDFLAGS=-Wl,-rpath,$$ORIGIN/../
+		LDFLAGS=-Wl,-rpath,\$$ORIGIN/../
 		SHARED_LIB_EXT = .so
 	endif
 endif
@@ -37,14 +37,14 @@ test:
 		exit 1; \
 	fi;
 
-	@if [ "$$(test/test_hsearch_r | echo $$?)" = "0" ]; then \
+	@if [ "$$(test/test_hsearch_r > /dev/null && echo $$?)" = "0" ]; then \
 		echo "Test #3: found no issues when executing test #1"; \
 	else \
 		echo "Test #3: encountered unexpected issue when executing test #1"; \
 		exit 1; \
 	fi;
 
-	@if [ "$$(test/test_hsearch_r_shared | echo $$?)" = "0" ]; then \
+	@if [ "$$(test/test_hsearch_r_shared > /dev/null && echo $$?)" = "0" ]; then \
 		echo "Test #4: found no issues when executing test #2"; \
 	else \
 		echo "Test #4: encountered unexpected issue when executing test #2"; \
