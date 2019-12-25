@@ -38,7 +38,7 @@ RETPOLINE_CFLAGS := -mindirect-branch=thunk-extern -mindirect-branch-register
 		else			
 $(warning Warning: $(CC) (gcc) does not support retpoline!)
 		endif
-		# found unexpected C compiler
+	# found unexpected C compiler
 	else
 $(warning Warning: Detected unexpected C compiler (unknown retpoline support)!)
 	endif
