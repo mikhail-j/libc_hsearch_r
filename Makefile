@@ -1,9 +1,9 @@
 # SPDX-License-Identifier: GPL-2.0
 
-CC=gcc
 CFLAGS=-std=c99 -O2
 OS_SHARED_LIBRARY_FLAGS=
 LDFLAGS=
+RETPOLINE_CFLAGS:=
 
 ifeq ($(OS),Windows_NT)
 	SHARED_LIB_EXT = .dll 
@@ -18,6 +18,34 @@ else
 	endif
 endif
 
+# check C compiler using version information
+ifeq ($(shell $(CC) --version 2>&1 | grep -o clang),clang)
+	# check for retpoline support (clang)
+	ifeq ($(shell $(CC) -Werror \
+			-mretpoline -mretpoline-external-thunk \
+			-E -x c /dev/null -o /dev/null >/dev/null 2>&1 && echo $$? || echo $$?),0)
+RETPOLINE_CFLAGS := -mretpoline -mretpoline-external-thunk
+	else
+$(warning Warning: $(CC) (clang) does not support retpoline!)
+	endif
+else
+	ifeq ($(shell $(CC) --version 2>&1 | grep -o gcc),gcc)
+		# check for retpoline support (gcc)
+		ifeq ($(shell $(CC) -Werror \
+				-mindirect-branch=thunk-extern -mindirect-branch-register \
+				-E -x c /dev/null -o /dev/null >/dev/null 2>&1 && echo $$? || echo $$?),0)
+RETPOLINE_CFLAGS := -mindirect-branch=thunk-extern -mindirect-branch-register
+		else			
+$(warning Warning: $(CC) (gcc) does not support retpoline!)
+		endif
+		# found unexpected C compiler
+	else
+$(warning Warning: Detected unexpected C compiler (unknown retpoline support)!)
+	endif
+endif
+
+# add retpoline flags (if compiler supports it)
+CFLAGS+=$(RETPOLINE_CFLAGS)
 
 .PHONY: test lib clean
 
