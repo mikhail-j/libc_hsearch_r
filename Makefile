@@ -19,7 +19,7 @@ else
 endif
 
 # check C compiler using version information
-ifeq ($(shell $(CC) --version 2>&1 | grep -o clang),clang)
+ifeq ($(shell $(CC) --version 2>&1 | grep -o clang | head -n 1),clang)
 	# check for retpoline support (clang)
 	ifeq ($(shell $(CC) -Werror \
 			-mretpoline -mretpoline-external-thunk \
